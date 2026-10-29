@@ -11,6 +11,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel, Field
+from features import TextFeatureExtractor
 
 # Define base paths
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
