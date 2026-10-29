@@ -7,9 +7,8 @@ Runs locally without paid API keys or recurring costs.
 import os
 import joblib
 import pandas as pd
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
-from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel, Field
 from features import TextFeatureExtractor
 
@@ -19,7 +18,6 @@ MODEL_PATH = os.path.join(BASE_DIR, "models", "kestrel_router.pkl")
 TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
 
 app = FastAPI(title="Kestrel Service Request Router", version="2.0")
-templates = Jinja2Templates(directory=TEMPLATES_DIR)
 
 model = None
 if os.path.exists(MODEL_PATH):
