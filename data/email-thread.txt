@@ -1,0 +1,49 @@
+EMAIL THREAD — Kestrel Home — Service-request routing (Variant B)
+Messages exchanged before this pack was sent. Provided as-is.
+========================================================================
+
+From: Ritu Deshpande, Head of D2C Operations, Kestrel Home
+To: Kabir Nanda, Account Lead (our side)
+Cc: Farhan Sheikh; Meenal Joshi; Tanmay Kulkarni
+Subject: Routing bot replacement
+
+Kabir - as discussed. Eighteen months of labelled requests, that's our ground truth. Build a classifier that matches it at 90%+ and we retire the bot soon. Tanmay is sending the export.
+
+------------------------------------------------------------------------
+
+From: Tanmay Kulkarni, Data & IT Admin, Kestrel Home
+To: Kabir Nanda, Account Lead (our side)
+Cc: Ritu Deshpande; Farhan Sheikh; Meenal Joshi
+Subject: Export
+
+Attached. team_label is the queue the bot put each request in when it came in. The resolution log has where each one actually ended up and how many transfers it took (only for closed requests, so not the latest ones).
+Heads up: two teams were renamed partway through so you'll see both names. The older records came from the old Zoho desk; some of that text came across with odd characters and the Zoho resolution times were never converted. I didn't touch any of it.
+
+------------------------------------------------------------------------
+
+From: Farhan Sheikh, Finance Controller, Kestrel Home
+To: Ritu Deshpande, Head of D2C Operations, Kestrel Home
+Cc: Meenal Joshi; Tanmay Kulkarni; Kabir Nanda
+Subject: Re: Routing bot replacement
+
+Happy to drop a Rs 3.2 lakh licence. Not happy to swap it for an AI bill that grows with every request. Whatever replaces it, I want the monthly run cost in writing before we switch.
+
+------------------------------------------------------------------------
+
+From: Meenal Joshi, Service Desk Manager, Kestrel Home
+To: Ritu Deshpande, Head of D2C Operations, Kestrel Home
+Cc: Farhan Sheikh; Tanmay Kulkarni; Kabir Nanda
+Subject: Re: Routing bot replacement
+
+For what it's worth - half my Billing queue some weeks is people who say they paid for an installation or a repair, and we transfer them straight out. Consumables keep getting purifier breakdowns too. And there's a pile of 'please call me about my purifier' that nobody can route without asking. Transfers are most of my team's day.
+
+------------------------------------------------------------------------
+
+From: Ritu Deshpande, Head of D2C Operations, Kestrel Home
+To: Kabir Nanda, Account Lead (our side)
+Cc: Farhan Sheikh; Meenal Joshi; Tanmay Kulkarni
+Subject: Re: Routing bot replacement
+
+Meenal, noted. Kabir - the labels are eighteen months of real routing. 90% match is the bar. Also useful to know which teams are busiest - I'm planning headcount next.
+
+------------------------------------------------------------------------

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Kestrel Home — Service Request Routing Hub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+    body { background-color: #f8fafc; color: #0f172a; padding: 32px 16px; }
+    .container { max-width: 860px; margin: 0 auto; background: #ffffff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); padding: 32px; border: 1px solid #e2e8f0; }
+    .header { border-bottom: 2px solid #f1f5f9; padding-bottom: 16px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; }
+    .header h1 { font-size: 22px; color: #0f172a; font-weight: 700; }
+    .badge { background: #dcfce7; color: #166534; font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 999px; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .form-group { display: flex; flex-direction: column; margin-bottom: 16px; }
+    label { font-size: 13px; font-weight: 600; margin-bottom: 6px; color: #475569; }
+    input, select, textarea { padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; outline: none; transition: border-color 0.2s; background: #ffffff; }
+    input:focus, select:focus, textarea:focus { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15); }
+    textarea { resize: vertical; min-height: 85px; }
+    button { background: #2563eb; color: #ffffff; border: none; padding: 12px 20px; font-size: 15px; font-weight: 600; border-radius: 8px; cursor: pointer; transition: background 0.2s; width: 100%; margin-top: 8px; }
+    button:hover { background: #1d4ed8; }
+    .result-card { margin-top: 28px; padding: 20px; border-radius: 10px; background: #f8fafc; border: 1px solid #e2e8f0; display: none; }
+    .result-card.active { display: block; animation: fadeIn 0.25s ease-in-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+    .team-badge { display: inline-block; font-size: 18px; font-weight: 700; color: #1e40af; background: #dbeafe; padding: 8px 16px; border-radius: 6px; margin-bottom: 12px; }
+    .confidence { font-size: 13px; color: #64748b; margin-left: 10px; font-weight: 500; }
+    .reasons-title { font-size: 13px; font-weight: 600; color: #475569; margin-top: 8px; margin-bottom: 6px; }
+    .reasons-list { padding-left: 20px; color: #334155; font-size: 14px; line-height: 1.6; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div>
+        <h1>Kestrel Service-Request Routing Desk</h1>
+        <p style="font-size: 13px; color: #64748b; margin-top: 4px;">Ops Policy v4.1 Compliant &bull; Zero Recurring API Costs</p>
+      </div>
+      <span class="badge">&bull; Local AI Online</span>
+    </div>
+
+    <form id="routingForm">
+      <div class="grid">
+        <div class="form-group">
+          <label>Request ID</label>
+          <input type="text" id="requestId" value="SR510822" required>
+        </div>
+        <div class="form-group">
+          <label>Channel</label>
+          <select id="channel">
+            <option value="chat">Chat</option>
+            <option value="whatsapp">WhatsApp</option>
+            <option value="email">Email</option>
+            <option value="ivr">IVR</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="form-group">
+          <label>Product Family</label>
+          <select id="productFamily">
+            <option value="Air Fryer">Air Fryer</option>
+            <option value="Water Purifier">Water Purifier</option>
+            <option value="Mixer Grinder">Mixer Grinder</option>
+            <option value="Robot Vacuum">Robot Vacuum</option>
+            <option value="Induction Cooktop">Induction Cooktop</option>
+            <option value="Ceiling Fan">Ceiling Fan</option>
+            <option value="Room Heater">Room Heater</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Warranty Status</label>
+          <select id="warrantyStatus">
+            <option value="in_warranty">In Warranty</option>
+            <option value="shield">Kestrel Shield</option>
+            <option value="out_of_warranty">Out of Warranty</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Customer Request Text</label>
+        <textarea id="requestText" placeholder="Paste incoming customer message here...">display of air fryer gone blank pls call back</textarea>
+      </div>
+
+      <button type="submit" id="submitBtn">Route Service Request</button>
+    </form>
+
+    <div class="result-card" id="resultCard">
+      <div style="display: flex; align-items: baseline;">
+        <span class="team-badge" id="resTeam">Repairs</span>
+        <span class="confidence" id="resConf">Confidence: 94.2%</span>
+      </div>
+      <div class="reasons-title">Desk Agent Rationale (Ops Policy §3):</div>
+      <ul class="reasons-list" id="resReasons"></ul>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('routingForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('submitBtn');
+      btn.innerText = 'Routing...';
+      btn.disabled = true;
+
+      const payload = {
+        request_id: document.getElementById('requestId').value,
+        channel: document.getElementById('channel').value,
+        product_family: document.getElementById('productFamily').value,
+        warranty_status: document.getElementById('warrantyStatus').value,
+        request_text: document.getElementById('requestText').value
+      };
+
+      try {
+        const res = await fetch('/predict', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+
+        document.getElementById('resTeam').innerText = data.predicted_team;
+        document.getElementById('resConf').innerText = `Confidence: ${(data.confidence * 100).toFixed(1)}%`;
+        
+        const reasonsList = document.getElementById('resReasons');
+        reasonsList.innerHTML = '';
+        data.reasons.forEach(r => {
+          const li = document.createElement('li');
+          li.innerText = r;
+          reasonsList.appendChild(li);
+        });
+
+        document.getElementById('resultCard').classList.add('active');
+      } catch (err) {
+        alert('Routing service call failed: ' + err.message);
+      } finally {
+        btn.innerText = 'Route Service Request';
+        btn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
