@@ -29,13 +29,13 @@ else:
     print("[!] Warning: Model file not found. Run python train_and_predict.py first.")
 
 class ServiceRequestInput(BaseModel):
-    request_id: str = Field(default="SR510822", example="SR510822")
-    channel: str = Field(default="chat", example="chat")
-    product_family: str = Field(default="Air Fryer", example="Air Fryer")
-    warranty_status: str = Field(default="in_warranty", example="in_warranty")
+    request_id: str = Field(default="SR510822", examples=["SR510822"])
+    channel: str = Field(default="chat", examples=["chat"])
+    product_family: str = Field(default="Air Fryer", examples=["Air Fryer"])
+    warranty_status: str = Field(default="in_warranty", examples=["in_warranty"])
     request_text: str = Field(
         default="display of air fryer gone blank pls call back",
-        example="display of air fryer gone blank pls call back"
+        examples=["display of air fryer gone blank pls call back"]
     )
 
 def generate_agent_rationale(predicted_team: str, req: ServiceRequestInput, confidence: float) -> list[str]:
@@ -121,8 +121,10 @@ def predict_endpoint(item: ServiceRequestInput):
     }
 
 @app.get("/", response_class=HTMLResponse)
-def index(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+def index():
+    html_path = os.path.join(TEMPLATES_DIR, "index.html")
+    with open(html_path, "r", encoding="utf-8") as f:
+        return HTMLResponse(content=f.read())
 
 if __name__ == "__main__":
     import uvicorn
